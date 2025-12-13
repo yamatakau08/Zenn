@@ -13,4 +13,5 @@ Zenn GitHub連携を用い、記事中の画像ファイルをリポジトリ内
 
 テスト動画
 ![](images/linkfilesizetest/HammerspoonEnJpSwitch.mov)
-
+テストGif画像
+![](images/linkfilesizetest/HammerspoonEnJpSwitch.gif)
