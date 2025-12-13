@@ -16,7 +16,6 @@ Zenn GitHub連携を用い、記事中の画像ファイルをリポジトリ内
 テストGif画像
 ![](/images/linkfilesizetest/HammerspoonEnJpSwitch.gif)
 
-[テスト動画(外部Link)](https://github.com/yamatakau08/Zenn/blob/main/images/linkfilesizetest/HammerspoonEnJpSwitch.mov?=true)
+![テスト動画 外部リンク](https://raw.githubusercontent.com/yamatakau08/Zenn/main/images/linkfilesizetest/HammerspoonEnJpSwitch.mov?=true)
+![テストGif画像 外部リンク](https://raw.githubusercontent.com/yamatakau08/Zenn/main/images/linkfilesizetest/HammerspoonEnJpSwitch.gif)
 
-![](https://github.com/yamatakau08/Zenn/blob/main/images/linkfilesizetest/HammerspoonEnJpSwitch.gif)
-![](https://raw.githubusercontent.com/yamatakau08/Zenn/main/images/linkfilesizetest/HammerspoonEnJpSwitch.gif)
