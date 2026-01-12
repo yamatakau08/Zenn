@@ -1,8 +1,8 @@
 ---
-title: "niri window manager 環境で、xremap 自動起動後 application 判別が動作しない! を対処する"
+title: "niri環境でxremapの自動起動でapplication判別が効かない問題の対処"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
 topics: [ "linux", "nixos", "niri", "xremap" ]
-published: false
+published: true
 ---
 
 ## はじめに
