@@ -27,7 +27,7 @@ NixOS インストール当初は、デスクトップ環境として `Budgie (X
 そんな折、スクロール型タイルコンポジター [niri](https://github.com/YaLTeR/niri?tab=readme-ov-file#) の操作体験が素晴らしいという情報を目にし、
 `Budgie` から `niri` へ環境を移行することにしました。
 
-`niri` でも引き続き `xremap` を使用するため `Budgie` での設定を流用すれば問題ないと考えていました。
+`niri` でも引き続き `xremap` を使用するため `Budgie` の設定を流用すれば問題ないと考えていました。
 しかし、いざ設定してみると **「サービスの自動起動はできるものの、アプリケーション判別が機能しない」** という問題に直面しました。
 
 Web検索やLLMを活用しても解決に至らず、非常に苦労しましたが、
@@ -63,7 +63,7 @@ niri 25.11 (Nixpkgs)
 ```
 
 ## xremap サービス起動設定
-今回、[xremap-nix-flake](https://github.com/xremap/nix-flake) を利用し、`niri` 版のバイナリをインストールしました。
+今回、[xremap-nix-flake](https://github.com/xremap/nix-flake) を利用し、`niri` 版をインストールしました。
 あわせて、 `xremap` を `systemd` 経由で実行するための定義モジュールを作成しています。
 
 `systemd` サービスには、
@@ -125,7 +125,7 @@ yama@tnt ~> cat ~/.config/nix/nixos/xremap-niri.nix
     enable = true; # サービス起動
     withNiri = true; # xremap niri 版
     userName = username;
-    serviceMode = "user";
+    serviceMode = "user"; # ユーザーモードのサービス設定
 
     yamlConfig = builtins.readFile ./xremap-config.yml; # 本ファイルから xremap config.yml のパス指定
   };
@@ -133,10 +133,10 @@ yama@tnt ~> cat ~/.config/nix/nixos/xremap-niri.nix
 ```
 
 `xremap-niri.nix` の定義モジュールファイルの作成ができたら、
-`sudo nixos-rebuild switch --flake <ディレクトリのパス>#<ホスト名>` を実行して、
+`sudo nixos-rebuild switch --flake <flake.nixのディレクトリパス>#<ホスト名>` を実行して、
 システムに反映させます。
 
-実際出力された `xremap` の `systemd` ユーザーサービス定義ファイルは、以下の通りになります。
+出力された `xremap` の `systemd` ユーザーサービス定義ファイルは、以下の通りになります。
 
 ```
 yama@tnt ~> cat /etc/systemd/user/xremap.service
@@ -172,7 +172,7 @@ WantedBy=graphical-session.target
 NixOS を再起動し、動作確認すると、
 ログイン後に `xremap` のキーリマップ自体は機能しているものの、 **「application 判別が動作していない」** ことが判明しました。
 
-`niri` のセッションに入った直後、ターミナルから `xremap` のサービス状態を確認してみると、以下のようなログが出力されていました。
+`niri` のセッションに入った直後、ターミナルから `xremap` のサービス状態を確認してみると、
 
 ```shell
 Welcome to fish, the friendly interactive shell
@@ -213,12 +213,15 @@ current application や current window の情報取得に失敗しているよ�
 
 ## 手動での再起動による回復
 
-上記の状態から `xremap` ユーザーサービスを **手動で再起動** してみます。
+上記の状態から `xremap` ユーザーサービスを **手動で再起動**
 
 `systemctl --user restart xremap`
 
+を実行してみます。
+
 `application-client: Niri (supported: true)`
-となり、 **application判別が正常動作する** 事が確認できました。
+
+と `true` なり、 **application判別が正常動作する** 事が確認できました。
 
 ```shell
 yama@tnt ~> systemctl --user restart xremap
@@ -250,8 +253,8 @@ spawn-at-startup "systemctl" "--user" "restart" "xremap.service"
 この問題は、`xremap.service` の起動順序に起因している推測し、 `systemd` 側で調整を試みました。
 具体的には、`niri.service` の起動後に `xremap.service` を起動してみたり、色々試しましたが、解決には至りませんでした。
 
-`systemd-analyze plot --user > > user-service-plot.svg` で確認したところ、グラフ内には、`niri.service` の起動が、
-`systemd` に把握されていないようです。
+`systemd-analyze plot --user > user-service-plot.svg` で確認したところ、
+グラフ内には、`niri.service` の起動がなく、`systemd` に把握されていないようです。
 
 現状では `niri` のスタートアップ処理で、`xremap` のユーザーサービス再起動する方法が、
 最も簡単かつ確実な対処方法と思います。
