@@ -1,33 +1,33 @@
 ---
 title: "niri window manager 環境で、xremap 自動起動後 application 判別が動作しない! を対処する"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
-topics: ["xremap"]
+topics: [ "linux", "nixos", "niri", "xremap" ]
 published: false
 ---
 
 ## はじめに
-普段は、Mac を用いているのですが、NixOS にも興味が湧き、
-手元にあった不要ノートPC に NixOS をインストールしてみました。
+NixOS にも興味が湧き、手元にあったノートPC に NixOS をインストールしてみました。
 
-Emacsを常用しているため、
+エディタは `Emacs` を常用しているため、
+
 - 半角/全角 → `Esc`
 - Caps lock → `Ctrl`
 
-さらに、他のアプリケーションでも Emacs ライクなキーバインドを使用したいと考え、
+他のアプリケーションでも `Emacs` ライクなキーバインドを使用したいので、
 アプリケーションごとに柔軟な設定が可能な [xremap](https://github.com/xremap/xremap) を導入しました。
 
-キーリマップの快適さは、作業効率に直結する極めて重要な要素です。
+キーリマップは、作業効率に直結する極めて重要な要素です。
 自分の理想どおりに設定が決まると、作業がより一層捗りますよね。
 
 ## 背景
-NixOS インストール当初は、デスクトップ環境として Budgie (X11) を使用していました。
-各種アプリケーションの導入に加え、苦労の末に xremap の設定やサービスの自動起動設定も完了。
+NixOS インストール当初は、デスクトップ環境として `Budgie (X11)` を使用していました。
+各種アプリケーションの導入に加え、苦労の末、`xremap` の設定やそのサービスの自動起動設定も完了。
 アプリケーション判別機能も無事に動作し、理想の環境へと近づきつつありました。
 
 そんな折、スクロール型タイルコンポジター [niri](https://github.com/YaLTeR/niri?tab=readme-ov-file#) の操作体験が素晴らしいという情報を目にし、
-Budgie から niri へ環境を移行することにしました。
+`Budgie` から `niri` へ環境を移行することにしました。
 
-niri でも引き続き xremap を使用するため、Budgie での設定を流用すれば問題ないと考えていました。
+`niri` でも引き続き `xremap` を使用するため `Budgie` での設定を流用すれば問題ないと考えていました。
 しかし、いざ設定してみると **「サービスの自動起動はできるものの、アプリケーション判別が機能しない」** という問題に直面しました。
 
 Web検索やLLMを活用しても解決に至らず、非常に苦労しましたが、
@@ -44,12 +44,12 @@ Web検索やLLMを活用しても解決に至らず、非常に苦労しまし�
 導入時の注意点
 [Installation](https://github.com/xremap/xremap?tab=readme-ov-file#installation) の項にある通り、
 使用するデスクトップ環境（DE）やウィンドウマネージャー（WM）によってインストールすべきバイナリが異なる点に注意してください。
-今回は niri 環境で使用するため、Wayland（niri）版をインストールする必要があります。
+今回は `niri` 環境で使用するため、`niri` 版をインストールする必要があります。
 
 設定方法
 具体的なキーリマップの設定については、公式の [Configuration](https://github.com/xremap/xremap?tab=readme-ov-file#configuration) を参照してください。
 また、リポジトリ内の [example](https://github.com/xremap/xremap/tree/master/example) に、
-Emacs キーバインドの設定例も用意されており、導入の参考になります。
+`Emacs` キーバインドの設定例も用意されており、導入の参考になります。
 
 ## 環境
 
@@ -67,14 +67,15 @@ niri 25.11 (Nixpkgs)
 あわせて、 `xremap` を `systemd` 経由で実行するための定義モジュールを作成しています。
 
 `systemd` サービスには、
-  -「システム(system)」
-  -「ユーザー(User)」
-モードの2種類があります。
+  - システム(System)
+  - ユーザー(User)
 
-[xremap nix flakeのテスト結果](https://github.com/xremap/nix-flake?tab=readme-ov-file#what-this-is)に基づき、
+の2種類のモードがあります。
+
+[xremap nix flake のテスト結果](https://github.com/xremap/nix-flake?tab=readme-ov-file#what-this-is)に基づき、
 ユーザーモードで起動する設定を用いました。
 
-下記が、flake.nix と xremap-niri.nix のモジュールになります。
+下記が、`flake.nix` と `xremap-niri.nix` のモジュールになります。
 
 ```shell
 yama@tnt ~> cat ~/.config/nix/nixos/flake.nix
@@ -132,9 +133,10 @@ yama@tnt ~> cat ~/.config/nix/nixos/xremap-niri.nix
 ```
 
 `xremap-niri.nix` の定義モジュールファイルの作成ができたら、
-`sudo nixos-rebuild switch --flake <ディレクトリのパス>#<ホスト名>` を実行してシステムに反映させます。
+`sudo nixos-rebuild switch --flake <ディレクトリのパス>#<ホスト名>` を実行して、
+システムに反映させます。
 
-実際出力された `xremap` の `systemd` サービス定義ファイルは、以下の通りになります。
+実際出力された `xremap` の `systemd` ユーザーサービス定義ファイルは、以下の通りになります。
 
 ```
 yama@tnt ~> cat /etc/systemd/user/xremap.service
@@ -167,7 +169,7 @@ WantedBy=graphical-session.target
 
 ## 発生した問題
 
-設定を反映させて、NixOS を再起動し、動作確認すると、
+NixOS を再起動し、動作確認すると、
 ログイン後に `xremap` のキーリマップ自体は機能しているものの、 **「application 判別が動作していない」** ことが判明しました。
 
 `niri` のセッションに入った直後、ターミナルから `xremap` のサービス状態を確認してみると、以下のようなログが出力されていました。
@@ -199,19 +201,19 @@ yama@tnt ~> systemctl --user status xremap
  1月 10 18:38:51 tnt xremap[1368]: application-client: Niri (supported: false)
 ```
 
-ログの最後に `supported: false` と表示されいます。
+ログの最後に `application-client: Niri (supported: false)` と表示されいます。
 
 この状態では、アプリケーション毎の個別キーマップが適用されません。
 
 このエラー表示は、
-[current_application](https://github.com/xremap/xremap/blob/bb8d3460d1578548978a7d3ae39ea462b04e5b9e/src/client/mod.rs#L54),[current_window](https://github.com/xremap/xremap/blob/bb8d3460d1578548978a7d3ae39ea462b04e5b9e/src/client/mod.rs#L42) から呼び出されている
-[check_supported](https://github.com/xremap/xremap/blob/bb8d3460d1578548978a7d3ae39ea462b04e5b9e/src/client/mod.rs#L36) 関数で出力しています。
+[current_application](https://github.com/xremap/xremap/blob/bb8d3460d1578548978a7d3ae39ea462b04e5b9e/src/client/mod.rs#L54), [current_window](https://github.com/xremap/xremap/blob/bb8d3460d1578548978a7d3ae39ea462b04e5b9e/src/client/mod.rs#L41) から呼び出されている
+[check_supported](https://github.com/xremap/xremap/blob/bb8d3460d1578548978a7d3ae39ea462b04e5b9e/src/client/mod.rs#L36) 関数中で出力しています。
 
 current application や current window の情報取得に失敗しているようです。
 
 ## 手動での再起動による回復
 
-上記の状態から `xremap` ユーザーサービスを手動で再起動してみます。
+上記の状態から `xremap` ユーザーサービスを **手動で再起動** してみます。
 
 `systemctl --user restart xremap`
 
@@ -226,10 +228,11 @@ yama@tnt ~> systemctl --user status xremap
  1月 10 18:39:16 tnt xremap[1887]: application: org.wezfurlong.wezterm
 ```
 
-このままの状態だと、`niri` セッションにログインする度に、手動で `xremap` のユーザーサービスを再起動するのは、
-手間なので自動起動したいところです。
-
 ## 対処方法
+
+`niri` セッションにログインするたびに、`xremap` のユーザーサービスを手動で再起動するのは手間がかかるため、
+自動再起動したいところです。
+
 
 `niri` の設定ファイル `~/.config/niri/config.kdl` に
 
@@ -239,22 +242,21 @@ spawn-at-startup "systemctl" "--user" "restart" "xremap.service"
 
 を追加し、
 
-`niri` セッション開始時の startup 処理で、`xremap` のユーザーサービス再起動するようにします。
-これで、`niri` セッションログイン後、 **xremapのアプリケーション判別も正常に動作** するようになります。
+`niri` セッション開始時の startup 処理に `xremap` のユーザーサービス再起動を組み込みます。
+これで、ログイン後も **xremapのアプリケーション判別も正常に動作** するようになります。
 
 ## まとめ
 
-`xremap.service` の起動順序に起因していると思われます。
-本来なら、`xremap` の systemd のサービスの起動順を調整する事で対処できるはずですが、
+この問題は、`xremap.service` の起動順序に起因している推測し、 `systemd` 側で調整を試みました。
+具体的には、`niri.service` の起動後に `xremap.service` を起動してみたり、色々試しましたが、解決には至りませんでした。
 
-`niri.service` の起動後に、`xremap.service` を起動するようにしてみたりもしましたが、解決には至りませんでした。
+`systemd-analyze plot --user > > user-service-plot.svg` で確認したところ、グラフ内には、`niri.service` の起動が、
+`systemd` に把握されていないようです。
 
-`systemd-analyze plot --user > > user-service-plot.svg` (下図) で確認したところ、`niri.service` は、表示されていません。
-`niri.service` 起動が、systemd に把握されていないように思えます。
+現状では `niri` のスタートアップ処理で、`xremap` のユーザーサービス再起動する方法が、
+最も簡単かつ確実な対処方法と思います。
 
-いろいろ試行はしましたが、この対処方法が一番簡単で確実と思います。
-
-もっと適切な対処方法があれば、共有いただければ幸いです。
+もし、より適切な対処方法があれば共有いただければ幸いです。
 
 ![](/images/systemd-analyze-user-plot.png)
 *systemd-analyze plot --user > user-service-plot.svg*
