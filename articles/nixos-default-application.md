@@ -2,7 +2,7 @@
 title: "NixOS switch実行後、既定のアプリケーションのウェブの設定が変わってしまう対処法"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
 topics: [ "linux", "nixos" ]
-published: false
+published: true
 ---
 
 ## はじめに
