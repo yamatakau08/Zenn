@@ -29,7 +29,7 @@ home-manager.users.<YOUR_USER_NAME>.xdg.mimeApps = {
 
 この設定と同様の設定するにあたり、
 
-`xdg.mimeApps.defaultApplications` の設定に関して、[xdg.mimeApps.defaultApplications](https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.mimeApps.defaultApplications) に記述説明を参照します。
+`xdg.mimeApps.defaultApplications` の設定に関して、[xdg.mimeApps.defaultApplications](https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.mimeApps.defaultApplications) に記述を参照します。
 
 ```
 {
@@ -93,7 +93,7 @@ application/x-extension-xht=firefox.desktop;
 既定のアプリケーションは、個人設定の範疇にあたるので、Home Manager で管理するのが良いです。
 
 `xdg.mimeApps.defaultApplications` は、[xdg-mime-apps.nix](https://github.com/nix-community/home-manager/blob/master/modules/misc/xdg-mime-apps.nix) で、Home Manager で定義されています。
-設定に用いるNixのモジュールのファイル名を、定義ファイル名に倣い `xdg-mime-apps.nix` とし、下記のように記述しました。
+設定に用いるNixのモジュールのファイル名を、定義ファイル名に合わせて `xdg-mime-apps.nix` とし、下記のように記述しました。
 
 ```
 yama@tnt ~> cat ~/.config/nix/home-manager/xdg-mime-apps.nix
@@ -174,6 +174,5 @@ yama@tnt ~>
 これで、`home-manager switch` や `sudo nixos-rebuild switch` を実行しても、既定のアプリケーション設定が勝手に元に戻ってしまうことはなくなります。
 
 ## まとめ
-Nix のシステム反映によるものなのか、Nix 管理外にしていたファイル `~/.config/mimeapps.list` が、書き換えられる原因までの究明には至りませんでしたが、
-Nix の管理下にした事で、この煩わしい症状に悩まされることから解放されました。
-
+Nix 管理外のファイル `~/.config/mimeapps.list` が書き換えられる原因が、Nix のシステム反映によるものなのか？ までの究明には至りませんでしたが、
+Nix 管理下にした事で、この煩わしい症状に悩まされることから解放されました。
