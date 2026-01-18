@@ -31,7 +31,7 @@ NixOS インストール当初は、デスクトップ環境として `Budgie (X
 しかし、いざ設定してみると **「サービスの自動起動はできるものの、アプリケーション判別が機能しない」** という問題に直面しました。
 
 Web検索やLLMを活用しても解決に至らず、非常に苦労しましたが、
-試行錯誤の結果、簡潔で確実と思われる対処法を見つけることができました。
+試行錯誤の結果、簡潔かつ確実と思われる対処法を見つけることができました。
 暫定的な対応かもしれませんが、同様の悩みを持つ方の参考になればと思い、その方法を共有します。
 
 ## xremap とは
@@ -48,8 +48,7 @@ Web検索やLLMを活用しても解決に至らず、非常に苦労しまし�
 
 設定方法
 具体的なキーリマップの設定については、公式の [Configuration](https://github.com/xremap/xremap?tab=readme-ov-file#configuration) を参照してください。
-また、リポジトリ内の [example](https://github.com/xremap/xremap/tree/master/example) に、
-`Emacs` キーバインドの設定例も用意されており、導入の参考になります。
+また、リポジトリ内の [example](https://github.com/xremap/xremap/tree/master/example) に、`Emacs` キーバインドの設定例も用意されており、導入の参考になります。
 
 ## 環境
 
@@ -217,7 +216,7 @@ current application や current window の情報取得に失敗しているよ�
 
 `systemctl --user restart xremap`
 
-を実行してみます。
+してみます。
 
 `application-client: Niri (supported: true)`
 
@@ -250,8 +249,8 @@ spawn-at-startup "systemctl" "--user" "restart" "xremap.service"
 
 ## まとめ
 
-この問題は、`xremap.service` の起動順序に起因している推測し、 `systemd` 側で調整を試みました。
-具体的には、`niri.service` の起動後に `xremap.service` を起動してみたり、色々試しましたが、解決には至りませんでした。
+この問題は、`xremap.service` の起動順序に起因していると推測し、 `systemd` 側で調整を試みました。
+具体的には、`niri.service` の起動後に `xremap.service` を起動してみたりと色々試しましたが、解決には至りませんでした。
 
 `systemd-analyze plot --user > user-service-plot.svg` で確認したところ、
 グラフ内には、`niri.service` の起動がなく、`systemd` に把握されていないようです。
@@ -263,3 +262,7 @@ spawn-at-startup "systemctl" "--user" "restart" "xremap.service"
 
 ![](/images/systemd-analyze-user-plot.png)
 *systemd-analyze plot --user > user-service-plot.svg*
+
+追記
+xremap の Discussion に同様の症状報告がある事が分りまいした。
+[Discussions #782](https://github.com/xremap/xremap/discussions/782#discussioncomment-14910208#:~:text=reproduce)
