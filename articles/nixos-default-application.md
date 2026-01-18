@@ -6,8 +6,8 @@ published: false
 ---
 
 ## はじめに
-NixOS の環境で、URLリンクをマウスでクリックした場合 `Chrome` ブラウザが開くように Budgie コントロールセンターで、既定のアプリケーションのウェブに `Chrome` に設定したのに、
-NixOS の設定変更反映、再起動後、URLをクリックすると、毎回別途インストールしていた `Obsidian` が起動する症状に遭遇してしまいました。
+NixOS の環境で、URLリンクをマウスでクリックした場合 `Chrome` ブラウザが開くように Budgie コントロールセンターで、既定のアプリケーションのウェブに `Chrome` ブラウザに設定したのに、
+NixOS の設定変更反映、再起動後、URLをクリックすると、毎回、別途インストールしていた `Obsidian` が起動する症状に遭遇してしまいました。
 煩わしかったので、対処方法をまとめておきます。
 
 ## 対処方法調査
@@ -48,12 +48,11 @@ home-manager.users.<YOUR_USER_NAME>.xdg.mimeApps = {
 ```
 
 `default1.desktop` は、既定のアプリケーション、
-`default.desktop`  は、`default1.desktop` がインストールされていない場合に用いられるアプリケーション
-を指定するとの説明です。
+`default.desktop`  は、`default1.desktop` がインストールされていない場合に用いられるアプリケーションを指定するとの説明です。
 
-自分の環境でのブラウザ `Chrome` に設定したいのですが、`default1.desktop` に、どういった文字列を設定すれば良いのか分かりませんでしたが、
+自分の環境では、`Chrome` ブラウザに設定したいのですが、`default1.desktop` に、どういった文字列を設定すれば良いのか分かりませんでしたが、
 既定のアプリケーションは、 `~/.config/mimeapps.list` で管理されているのを知りました。
-既定のアプリケーションを `Chrome` に設定した状態で確認し、`chrome` の場合は、`chromium-browser.desktop` を設定すれば良いことが分かりました。
+既定のアプリケーションを `Chrome` ブラウザに設定した状態で、`~/.config/mimeapps.list` を確認し、`chrome` ブラウザの場合は、`chromium-browser.desktop` を設定すれば良いことが分かりました。
 
 ```
 yama@tnt ~/.config> cat ~/.config/mimeapps.list
@@ -84,7 +83,7 @@ application/x-extension-xhtml=firefox.desktop;
 application/x-extension-xht=firefox.desktop;
 ```
 
-`default.desktop` には、NixOS をインストールした際に、インストールされるブラウザ `firefox.desktop` を設定します。
+`default.desktop` には、NixOS をインストールした際に、インストールされるブラウザ `firefox.desktop` を設定しておくと良いでしょう。
 
 # NixOS での既定のアプリケーションの設定
 
@@ -126,7 +125,7 @@ imports = [
 ];
 ```
 
-システムへ反映（switch）を実行する際、すでに ~/.config/mimeapps.list が存在していると、
+システムへ反映（switch）を実行する際、すでに `~/.config/mimeapps.list` が存在していると、
 Home Manager のファイル生成に失敗しエラーとなるので、あらかじめファイルをリネームしておきます。
 
 ```
@@ -171,7 +170,7 @@ x-scheme-handler/unknown=chromium-browser.desktop;firefox.desktop
 [Removed Associations]
 yama@tnt ~>
 ```
-これで、`home-manager switch` や `sudo nixos-rebuild switch` を実行しても、既定のアプリケーション設定が勝手に元に戻ってしまうことはなくなります。
+これで、`home-manager switch` や `sudo nixos-rebuild switch` を実行しても、既定のアプリケーション設定が勝手に変ってしまうことはなくなります。
 
 ## まとめ
 Nix 管理外のファイル `~/.config/mimeapps.list` が書き換えられる原因が、Nix のシステム反映によるものなのか？ までの究明には至りませんでしたが、
