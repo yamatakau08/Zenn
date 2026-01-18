@@ -52,9 +52,9 @@ home-manager.users.<YOUR_USER_NAME>.xdg.mimeApps = {
 
 自分の環境では、`Chrome` ブラウザに設定したいのですが、`default1.desktop` に、どういった文字列を設定すれば良いのか分かりませんでしたが、
 既定のアプリケーションは、 `~/.config/mimeapps.list` で管理されているのを知りました。
-既定のアプリケーションを `Chrome` ブラウザに設定した状態で、`~/.config/mimeapps.list` を確認し、`chrome` ブラウザの場合は、`chromium-browser.desktop` を設定すれば良いことが分かりました。
+`~/.config/mimeapps.list` を確認し、`chrome` ブラウザの場合は、`chromium-browser.desktop` を設定すれば良いことが分かりました。
 
-```
+```shell
 yama@tnt ~/.config> cat ~/.config/mimeapps.list
 [Default Applications]
 x-scheme-handler/http=obsidian.desktop
@@ -94,7 +94,7 @@ application/x-extension-xht=firefox.desktop;
 `xdg.mimeApps.defaultApplications` は、[xdg-mime-apps.nix](https://github.com/nix-community/home-manager/blob/master/modules/misc/xdg-mime-apps.nix) で、Home Manager で定義されています。
 設定に用いるNixのモジュールのファイル名を、定義ファイル名に合わせて `xdg-mime-apps.nix` とし、下記のように記述しました。
 
-```
+```shell
 yama@tnt ~> cat ~/.config/nix/home-manager/xdg-mime-apps.nix
 { pkgs, ... }:
 
@@ -128,7 +128,7 @@ imports = [
 システムへ反映（switch）を実行する際、すでに `~/.config/mimeapps.list` が存在していると、
 Home Manager のファイル生成に失敗しエラーとなるので、あらかじめファイルをリネームしておきます。
 
-```
+```shell
 yama@tnt ~/.config> mv mimeapps.list mimeapps.list.org
 ```
 
@@ -137,7 +137,7 @@ yama@tnt ~/.config> mv mimeapps.list mimeapps.list.org
 - Home Manager単独の場合 `home-manager switch`
 - Home Manager を NixOS モジュールとして利用している場合 `sudo nixos-rebuild switch`
 
-```
+```shell
 yama@tnt ~/.c/n/nixos (main) [4]> sudo nixos-rebuild switch --flake ~/.config/nix/nixos#tnt
 [sudo] yama のパスワード:
 warning: Git tree '/home/yama/.config/nix' is dirty
