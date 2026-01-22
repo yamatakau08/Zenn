@@ -74,7 +74,7 @@ niri 25.11 (Nixpkgs)
 [xremap nix flake のテスト結果](https://github.com/xremap/nix-flake?tab=readme-ov-file#what-this-is)に基づき、
 ユーザーモードで起動する設定を用いました。
 
-下記が、`flake.nix` と `xremap-niri.nix` のモジュールになります。
+下記が `flake.nix` と `xremap-niri.nix` のモジュールになります。
 
 ```shell
 yama@tnt ~> cat ~/.config/nix/nixos/flake.nix
@@ -125,8 +125,9 @@ yama@tnt ~> cat ~/.config/nix/nixos/xremap-niri.nix
     withNiri = true; # xremap niri 版
     userName = username;
     serviceMode = "user"; # ユーザーモードのサービス設定
+    watch = true; # "running xremap watching new devices"
 
-    yamlConfig = builtins.readFile ./xremap-config.yml; # 本ファイルから xremap config.yml のパス指定
+    yamlConfig = builtins.readFile ./xremap-config.yml; # 本ファイルからの xremap config.yml の相対パス指定
   };
 }
 ```
