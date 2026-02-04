@@ -1,7 +1,7 @@
 ---
 title: "niri 起動時に外部モニターに自動でフォーカスを当てる設定"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
-topics: [ "linux", "niri" ]
+topics: [ "linux", "wayland", "niri" ]
 published: true
 ---
 
