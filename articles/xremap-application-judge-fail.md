@@ -1,7 +1,7 @@
 ---
 title: "niri環境でxremapの自動起動でapplication判別が効かない問題の対処"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
-topics: [ "linux", "nixos", "niri", "xremap" ]
+topics: [ "linux", "nixos", "niri", "xremap", "wayland" ]
 published: true
 ---
 
