@@ -2,7 +2,7 @@
 title: "niri 起動時に外部モニターに自動でフォーカスを当てる設定"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
 topics: [ "linux", "niri" ]
-published: false
+published: true
 ---
 
 ## はじめに
@@ -12,11 +12,11 @@ Laptop の画面 11.6 inch は小さいため、自宅では 39.7 inch の外部
 全てのウィンドウを外部モニター側で開くようにしています。
 
 そこで困っていたのは、
-**niri 起動直後に必ず LapTop の画面がフォーカスが当たってしまう** ことです。
+**niri 起動直後に必ず Laptop の画面がフォーカスが当たってしまう** ことです。
 毎回、Super + Shift + ← あるいは → で外部モニターにフォーカスを移動させたり、
 マウスを外部モニター側に動かしたりする操作を負担に感じていました。
 
-長らく放置していましが、重い腰を上げて対処方法を探してみたところ、ありました!
+長らく放置していましたが、重い腰を上げて対処方法を探してみたところ、ありました!
 
 ## 対処方法
 
@@ -24,20 +24,19 @@ Laptop の画面 11.6 inch は小さいため、自宅では 39.7 inch の外部
 下記のように、外部モニター (e.g. "HDMI-A-1") 用の output セクションを追加し
 [focus-at-startup](https://yalter.github.io/niri/Configuration%3A-Outputs.html#focus-at-startup) を設定する事で対処できます。
 
-```
-# ~/.config/niri/config.kdl
+```kdl:config.kdl
 // Focus HDMI-A-1 by default.
 output "HDMI-A-1" {
     focus-at-startup
 }
 ```
 
-`output` の後ろ指定する文字列は、`connector name` を指定します。
+`output` の後ろに指定する文字列は、`connector name` を指定します。
 
 `connector name` は、`niri msg outputs` コマンドを実行し、
 出力結果の `Output` 行の右端にある `()` 内の文字列で確認できます。
 
-ちなみに、`eDP-1` は laptop の内蔵モニターになります。
+ちなみに、`eDP-1` は Laptop の内蔵モニターになります。
 
 ```shell
 ~> niri msg outputs
