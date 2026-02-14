@@ -179,6 +179,25 @@ This is foobar
 デフォルトでは元の平文ファイルは削除されません。
 暗号化と復号化を確認したら、暗号化前の元ファイル(平文ファイル)は削除しておきましょう！
 
+## --pinentry-mode loopback オプションをデフォルト設定にする
+毎回 `--pinentry-mode loopback` を指定するのが面倒な場合は、
+`~/.gnupg/gpg.conf` に以下の1行を追加して下さい。
+`pinentry-mode loopback`
+
+これにより、コマンド実行時に `--pinentry-mode loopback` をオプション指定しなくて良くなります。
+
+```shellscript
+> man gpg
+gpg.conf
+       This  is  the standard configuration file read by gpg on startup.  It may con‐
+       tain any valid long option; the leading two dashes may not be entered and  the
+       option  may  not be abbreviated.  This default name may be changed on the com‐
+       mand line (see: [gpg-option --options]).  You should backup this file.
+```
+
+`gpg.conf` には、先頭の `--` を除いたロングオプションを記述します。
+オプションの省略形は使用できません。
+
 ## まとめ
 当初 `Pinentryがありません` というエラーメッセージの原因が分からず、
 `Pinentry` プログラムを別途インストールしたり、`gpg-agent` の設定したりと試行錯誤しました。
