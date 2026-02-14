@@ -7,13 +7,13 @@ published: false
 
 ## はじめに
 Emacs の auth-source パッケージで、認証情報を管理する `~/.auth-info.gpg` ファイルを利用する必要が出てきました。
-これに伴い、ファイルを安全に扱うための暗号化が必要になったので、Emacs 連携の前に GnuPG (GNU Privacy Guard) 単独でファイルの暗号化、複号化を確認してみることにしました。
+これに伴い、ファイルを安全に扱うための暗号化が必要になったので、Emacs 連携の前に GnuPG (GNU Privacy Guard) 単独でファイルの暗号化、復号化を確認してみることにしました。
 
 本記事は、ファイルの暗号化と復号化の手順、およびその際につまずいた点をまとめたものになります。
 
 ## 環境
 環境は Linux (NixOS) です。
-```
+```shellscript
 yama@tnt ~> uname -a
 Linux tnt 6.12.68 #1-NixOS SMP PREEMPT_DYNAMIC Fri Jan 30 09:28:49 UTC 2026 x86_64 GNU/Linux
 ```
@@ -108,7 +108,7 @@ GnuPG のデフォルト設定 `--pinentry-mode ask` では、OSごとの `pinen
 以下のコマンドを実行してください。
 `-c` は `--symmetric` の短縮オプションです。
 
-```
+```shellscript
 gpg --pinentry-mode loopback --symmetric file
 # または
 gpg --pinentry-mode loopback -c file
@@ -118,12 +118,14 @@ gpg --pinentry-mode loopback -c file
 完了すると元のファイルと同じディレクトリに、
 `.gpg` の拡張子がついた暗号化ファイル `file.gpg` が生成されます。
 
+:::message alert
 **注意** `--pinentry-mode loopback` オプションの指定を忘れないようにして下さい。
+:::
 
 ### 実行例
 `/tmp/foobar` というファイルを作成し、暗号化する流れは以下になります。
 下記のように、`cat -v /tmp/foobar.gpg` ファイルの中身が暗号化されているのが分かります。
-```
+```shellscript
 yama@tnt /tmp> pwd
 /tmp
 yama@tnt /tmp> echo "This is foobar" > /tmp/foobar
@@ -139,9 +141,9 @@ M-^LM-^NM-&M-^S{1M-AM-(M-rM-RD^A'wM-QM-/!YM-|M-FM-xWP8i^VM-^GM-^@_M-)^XM-QM-zM-o
 M-^^GM-j19M-E^_M-sM-^AM-f~M-,;M-^AFM-^KbM-}
 ```
 
-#### 注意点 `--pinentrymode loopback` オプションを忘れた場合
-このオプション指定を忘れると、ターミナル上でパスフレーズを受け取ることができず、以下のエラーで失敗します。で注意して下さい。
-```
+#### 注意点 `--pinentry-mode loopback` オプションを忘れた場合
+このオプション指定を忘れると、ターミナル上でパスフレーズを受け取ることができず、以下のエラーで失敗します。注意して下さい。
+```shellscript
 yama@tnt /tmp> echo "This is foobar" > /tmp/foobar
 yama@tnt /tmp> gpg -c /tmp/foobar
 gpg: エージェントに問題: Pinentryがありません
@@ -152,7 +154,7 @@ gpg: '/tmp/foobar'の共通鍵暗号に失敗しました: 操作がキャンセ
 ## ファイルの復号化手順
 次に、暗号化したファイルを復号して内容を表示します。
 
-```
+```shellscript
 gpg --pinentry-mode loopback -d file.gpg
 # または
 gpg --pinentry-mode loopback --decrypt file.gpg
@@ -162,7 +164,7 @@ gpg --pinentry-mode loopback --decrypt file.gpg
 `--pinentry-mode loopback` オプションの指定を忘れないようにしてください。
 
 ### 実行例
-```
+```shellscript
 yama@tnt /tmp> gpg --pinentry-mode loopback -d /tmp/foobar.gpg
 gpg: AES256.CFB暗号化済みデータ
 gpg: 1 個のパスフレーズで暗号化
