@@ -2,7 +2,7 @@
 title: "GnuPG ターミナルで完結するファイル暗号化・復号化手順"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
 topics: [ "Linux", "Mac", "GnuPG" ]
-published: false
+published: true
 ---
 
 ## はじめに
