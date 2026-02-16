@@ -2,7 +2,7 @@
 title: "Emacs EasyPG で暗号化ファイルを作成する"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
 topics: [ "Emacs", "EasyPG", "GnuPG" ]
-published: false
+published: true
 ---
 
 ## はじめに
@@ -18,6 +18,9 @@ EasyPG は Emacs で GNU Privacy Guard を扱うためのユーザーインタ�
 標準で付属しており、外部ツールとして GnuPG がインストールされていれば利用できます。
 
 本記事では、EasyPG を使った共通鍵暗号方式によるファイルの暗号・復号化の手順を説明します。
+
+GnuPG については 以下のページにまとめていますので必要に応じて参考にしてください。
+https://zenn.dev/roswell/articles/gnupg-file-file-encdec
 
 ## 環境
 本記事の検証環境を以下に示します。
