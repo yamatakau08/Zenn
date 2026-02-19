@@ -2,7 +2,7 @@
 title: "設定ファイルにパスワードを直書きしない！Emacs auth-source の基本的な使い方"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
 topics: [ "Emacs", "GnuPG", "EasyPG" ]
-published: false
+published: true
 ---
 
 ## はじめに
@@ -145,7 +145,7 @@ yama@tnt ~> ls -l .authinfo.gpg
 (auth-source-pick-first-password :machine "hbar" :login "lbaz")
 ;; => "hlfoopass"
 ```
-`:machine` は有効なキーではないため、引数なしの状態と同じく「ファイル内の先頭エントリ」が取得されます。
+`:machine` は有効なキーではないため、`:login` の指定に関わらず、指定引数なしの状態と同じく「ファイル内の先頭エントリ」が取得されます。
 
 - 誤って `:login` を用いた場合
 ```elisp
@@ -166,9 +166,8 @@ yama@tnt ~> ls -l .authinfo.gpg
 
 ## まとめ
 Emacs で `auth-source` を利用することで、設定ファイル内に認証情報を平文で記述する必要がなくなります。
-暗号化したファイルから安全に値を取り出す仕組みを整えておけば、
+暗号化したファイルから安全に値を取り出すことができます。
 設定ファイルを GitHub などで公開する際も安心感が増し、セキュリティ面でもとても有効な対策になります。
-
 以上、`auth-source` の基本的な使い方の説明でした。
 
 Emacs Info を参照することで、さらに効果的な活用方法が解説されています。ぜひ自分にあった設定を探して見てください。
