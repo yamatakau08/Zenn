@@ -37,14 +37,14 @@ Emacs に標準で組み込まれています。
 `EasyPG` の設定や使い方については、以下の記事で解説しているので、必要に応じて参照して下さい。
 https://zenn.dev/roswell/articles/emacs-easypg
 
-## `auth-source` が使用する認証情報ファイル
+## auth-source が使用する認証情報ファイル
 
 `auth-sources` 変数を変更していない場合、以下の順序でファイルが参照されます。
 1. `~/.authinfo` (暗号化されていないテキストファイル)
 2. `~/.authinfo.gpg` (GnuPG で暗号化されたファイル)
-3. `~/.netrc` 
+3. `~/.netrc`
 
-本記事では、セキュリティを考慮し、`GnuPG` で暗号化した `~/.authinfo.gpg` を使用します。
+本記事では、セキュリティを考慮し `GnuPG` で暗号化した `~/.authinfo.gpg` を使用します。
 
 ### 認証情報ファイルの書式
 
@@ -65,7 +65,7 @@ machine MYMACHINE login MYLOGINNAME password MYPASSWORD port MYPORT
 
 :::message
 筆者の経験談
-Gemini API を利用した際、プロジェクト名を `login` に、API キーを、`password` に設定し、
+Gemini API を利用した際、プロジェクト名を `login` に、API キーを、`password` に設定し
 `machine` トークンを省略して記述したところ、後述するパスワード検索において、意図しない結果が返ってきてしまい、解決に時間を要しました。
 :::
 ## ~/.authinfo.gpg ファイルの作成
@@ -91,7 +91,7 @@ yama@tnt ~> ls -l .authinfo.gpg
 そのため、`*scratch*` バッファなどで動作確認を行っている際に `~/.authinfo.gpg` を更新しても、そのままでは変更が反映されません。
 
 設定ファイルの変更を反映させるには、
-`M-x auth-source-forget-all-cached` 
+`M-x auth-source-forget-all-cached`
 を実行して、キャッシュされた古い認証情報をクリアする必要があります。
 
 ## パスワード取得
@@ -101,7 +101,7 @@ yama@tnt ~> ls -l .authinfo.gpg
 
 引数には、以下のキーと値を用い、`:host` と `:user` の両方を明示的に指定してください。
 - `:host "MYMACHINE"`
-- `:user "MYLOGINNAME"` 
+- `:user "MYLOGINNAME"`
 
 ### 使用上の注意点
 1. 引数のキー名称について
@@ -171,4 +171,4 @@ Emacs で `auth-source` を利用することで、設定ファイル内に認�
 
 以上、`auth-source` の基本的な使い方の説明でした。
 
-Emacs Info を参照することで、さらに効果的な活用方法が解説されています。ぜひ自分にあった設定を探してみてください。
+Emacs Info を参照することで、さらに効果的な活用方法が解説されています。ぜひ自分にあった設定を探して見てください。
