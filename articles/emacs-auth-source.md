@@ -164,10 +164,38 @@ yama@tnt ~> ls -l .authinfo.gpg
 ```
 `auth-source-search` は条件にマッチしたエントリのリストを返すため、`car` で最初のエントリを取り出し、`plist-get` で目的のキー（`:port`）を指定して値を取得します。
 
+## マシン名やユーザー名を非公開にしたい場合
+GitHub などで Emacs の設定ファイルを公開している場合、
+`auth-source` の検索キー `:host` や `:user` の値を隠したいことがあります。
+その場合、`.authinfo.gpg` のエントリの `machine` , `login` には代替値を記述し、別途定義した独自のキーから実値を取得することが可能です。
+
+以下は、
+`machine` と `login` に代替値として `dummyhbar`,`dummylbar` を設定し、
+独自トークン `amachine` と `alogin` を追加して、実値 `hbar` と `lbar`
+を記述した例です。
+
+```text:~/.authinfo.gpg
+machine hfoo login lfoo password hlfoopass
+machine hbar login lbar password hlbarpass
+machine hbaz login lbaz password hlbazpass port 1234
+machine dummyhbar login dummylbar password hlbarpass amachine hbar alogin lbar
+```
+
+`auth-source-search` 関数を用いて、代替値から実値を取得する例です。
+```elisp
+(auth-source-search :host "dummyhbar" :user "dummylbar" :max 1)
+;; => ((:host "dummyhbar" :user "dummylbar" :secret #[0 "\300\242\203\0\300\242\302\301!!\207\302\301!\207" [... "1hIrDEY35O1OJH2aNXna2Q==-oQ8XlbiNlHrMGWOHma/Iiw==" auth-source--deobfuscate] 3] :amachine "hbar" :alogin "lbar"))
+
+(plist-get (car (auth-source-search :host "dummyhbar" :user "dummylbar" :max 1)) :amachine)
+;; => "hbar"
+(plist-get (car (auth-source-search :host "dummyhbar" :user "dummylbar" :max 1)) :alogin)
+;; => "lbar"
+```
+
 ## まとめ
 Emacs で `auth-source` を利用することで、設定ファイル内に認証情報を平文で記述する必要がなくなります。
 暗号化したファイルから安全に値を取り出すことができます。
 設定ファイルを GitHub などで公開する際も安心感が増し、セキュリティ面でもとても有効な対策になります。
 以上、`auth-source` の基本的な使い方の説明でした。
 
-Emacs Info を参照することで、さらに効果的な活用方法が解説されています。ぜひ自分にあった設定を探して見てください。
+Emacs Info `Auth-source` セクションには、さらに効果的な活用方法が解説されています。ぜひ自分にあった設定を探して見てください。
