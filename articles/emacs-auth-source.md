@@ -2,7 +2,7 @@
 title: "設定ファイルにパスワードを直書きしない！Emacs auth-source の基本的な使い方"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
 topics: [ "Emacs", "GnuPG", "EasyPG" ]
-published: false
+published: true
 ---
 
 ## はじめに
