@@ -13,7 +13,7 @@ Emacs からローカル LLM パッケージである `ellama` を利用しよ�
 今回 `ellama` 経由でも Gemini 無料枠を利用できることを知りました。
 しかし [ellama 公式リポジトリ](https://github.com/s-kostyaev/ellama) の README では設定方法が分かりづらく、導入までに時間を要しました。
 
-本記事では、同様に検討している方に向けて、設定手順を備忘録としてまとめす。
+本記事では、同様に検討している方に向けて、設定手順を備忘録としてまとめます。
 
 ## 前提条件
 - Emacs で `ellama` を導入済み、あるいは利用を検討していること
@@ -51,8 +51,8 @@ Gemini API を利用するために、Google AI StudioでAPIキーを取得し�
 「新しいキーを作成する」ダイアログが表示されたら、以下の操作を行います。
 - 「キー名の設定」に `Gemini API Key` など任意の名前を入力します。
 - 「インポートしたプロジェクトを選択」のリストから `+ プロジェクトを作成` を選択します。
-	- 「新しいプロジェクト作成」ダイアログで、「プロジェクトに名前をつける」のフィールドに `Gemini Project` など任意の名前を入力します。
-	- 「プロジェクトを作成」ボタンをクリックする
+  - 「新しいプロジェクト作成」ダイアログで、「プロジェクトに名前をつける」のフィールドに `Gemini Project` など任意の名前を入力します。
+  - 「プロジェクトを作成」ボタンをクリックする
 
 ### Gemini APIキーの確認
 `API キー` 画面の `キー` をクリックすると、Gemini API Key が表示されます。
@@ -77,15 +77,15 @@ Gemini API を利用するために、Google AI StudioでAPIキーを取得し�
 :::
 
 - `gemini-3-flash-preview`
-	- スピードを重視して構築された Google の最もインテリジェントなモデル。最先端のインテリジェンスと優れた検索およびグラウンディング機能を組み合わせたものです。
+  - スピードを重視して構築された Google の最もインテリジェントなモデル。最先端のインテリジェンスと優れた検索およびグラウンディング機能を組み合わせたものです。
 - `gemini-2.5-flash`
-	- 100 万トークンのコンテキスト ウィンドウをサポートし、思考予算を備えた初のハイブリッド推論モデル。
+  - 100 万トークンのコンテキスト ウィンドウをサポートし、思考予算を備えた初のハイブリッド推論モデル。
 - `gemini-2.5-flash-lite`
-	- 最も小型で費用対効果の高いモデル。大規模な使用向けに構築されています
+  - 最も小型で費用対効果の高いモデル。大規模な使用向けに構築されています
 
 ### 無料枠で動作しないモデル
 - `gemini-2.5-pro` **無料枠で使用不可**
-	- コーディングや複雑な推論タスクに優れた、最先端の多目的モデル。
+  - コーディングや複雑な推論タスクに優れた、最先端の多目的モデル。
 
 ## 各種設定
 
@@ -176,7 +176,7 @@ Gemini を利用するためには、`(require 'llm-gemini)` で `make-llm-gemin
 - 非推奨のモデルを指定している
 - 無料枠では使用できないモデルを指定している
 
-### 非推奨モデル `gemini-2.0-flash` を指定した場合
+#### 非推奨モデル gemini-2.0-flash を指定した場合
 ```elisp
 Error running timer: (error "Error calling the LLM: Problem calling GCloud Vertex AI: status: 429 message: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
 * Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
@@ -185,7 +185,7 @@ Error running timer: (error "Error calling the LLM: Problem calling GCloud Verte
 Please retry in 45.387738042s.")
 ```
 
-### 有料枠モデル gemini-2.5-pro 指定した場合
+#### 有料枠モデル gemini-2.5-pro 指定した場合
 
 ```elisp
 Error running timer: (error "Error calling the LLM: Problem calling GCloud Vertex AI: status: 429 message: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.
