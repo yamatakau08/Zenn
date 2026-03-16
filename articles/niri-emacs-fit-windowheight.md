@@ -2,7 +2,7 @@
 title: "niri 環境で Emacs のウィンドウの高さを画面の高さに自動で合わせる設定"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
 topics: [ "Emacs", "wayland", "niri" ]
-published: false
+published: true
 ---
 
 ## はじめに
@@ -40,10 +40,10 @@ System Description: NixOS 26.05 (Yarara)
 
 ## 対処方法
 
-niri が ウィンドウマネージャーとして Emacs のウィンドサイズ(高さ)を適切に制御できるようにするため、Emacs でのフレームの高さを指定する `height` 変数を設定しないようにします。
+niri が ウィンドウマネージャーとして Emacs のウィンドウサイズ(高さ)を適切に制御できるようにするため、Emacs でのフレームの高さを指定する `height` 変数を設定しないようにします。
 ただし、この変更のみではモードライン以下の領域が画面下部からはみ出してしまう症状が発生します。
 
-GitHub の [Issues 2632](https://github.com/YaLTeR/niri/issues/2632#issuecomment-3586826278) を参照したところ
+[GitHub Issue #2632](https://github.com/YaLTeR/niri/issues/2632#issuecomment-3586826278) を参照したところ
 以下の設定
 ```elisp:early-init.el
 (setopt frame-inhibit-implied-resize t)
@@ -54,11 +54,10 @@ GitHub の [Issues 2632](https://github.com/YaLTeR/niri/issues/2632#issuecomment
 OSごとに挙動を分ける場合は、以下のように記述すると良いでしょう
 
 ```elisp:early-init.el
-(unless (eq system-type 'darwin) ; on Mac , if enabl this option, Emacs logo in `*GNU Emacs*` buffer doesn't appear
+(unless (eq system-type 'darwin) ; on Mac, if enable this option, Emacs logo in `*GNU Emacs*` buffer doesn't appear
   (setopt frame-inhibit-implied-resize t))
 ```
 
 ## まとめ
 niri を利用するまで、Emacs 側でフレームの位置やサイズを設定していましたが、niri 環境下ではウィンドウマネージャー側がサイズを制御します。
 そのため、Emacs 側ではサイズに関する直接的な設定を行わないのが最適なようです。
-
