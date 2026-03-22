@@ -2,7 +2,7 @@
 title: "Emacs Ellama を用いて Magit で Git コミットメッセージを生成する"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
 topics: [ "Emacs", "Ellama", "Magit", "Git" ]
-published: false
+published: true
 ---
 
 ## はじめに
@@ -20,7 +20,7 @@ Emacs
 - パッケージ
   - [Magit](https://github.com/magit/magit)
   - [Ellama](https://github.com/s-kostyaev/ellama)
-- LLM プロバイダー (ollamaなど)
+- LLM プロバイダー (Ollama など)
 
 パッケージのインストールと設定は本記事では扱いません。
 
@@ -29,7 +29,7 @@ Git 管理下のディレクトリあるいはファイルを開いた状態で�
 
 1. `C-x g` を入力し `magit-status` を実行します。
 2. Magit バッファでコミット対象のファイルに対して `s` を押し、ステージングに登録します。
-3. `c c` を押し `magit-commit-create` を実行します
+3. `c c` を押し `magit-commit-create` を実行します.
 4. `COMMIT_EDITMSG` バッファが開いたら、`M-x ellama-generate-commit-message` を実行します。
 
 実行後、LLM によってコミットメッセージ案が自動生成されます。
@@ -160,7 +160,7 @@ Improve abc
 
 内部で `(format ellama-generate-commit-message-template diff)` を呼び出し、テンプレート `ellama-generate-commit-message-template` を用いて LLM のプロンプトを構成しています。
 
-なので、用途（英語用、 1 行用、日本語 1行用など）ごとに、テンプレート変数とそれを呼び出す関数を用意すれば、コマンド実行時にコミットメッセージの形式を切り替えられます。
+なので、用途（英語用、 1 行用、日本語 1 行用など）ごとに、テンプレート変数とそれを呼び出す関数を用意すれば、コマンド実行時にコミットメッセージの形式を切り替えられます。
 
 
 ## まとめ
