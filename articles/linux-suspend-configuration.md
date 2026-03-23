@@ -2,7 +2,7 @@
 title: "NixOS Linux で ノートPC の蓋を閉じた際に suspend に入る設定を調べてみた!"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
 topics: [ "NixOS", "Linux", "logind" ]
-published: false
+published: true
 ---
 
 ## はじめに
@@ -141,12 +141,12 @@ NAME                                TYPE      SIGNATURE           RESULT/VALUE  
 
 ようやく `logind` の `HandleLidSwitch` に関する現在の設定値が確認できました!
 
-[ACPI イベント archlinux.jp ](https://wiki.archlinux.jp/index.php/%E9%9B%BB%E6%BA%90%E7%AE%A1%E7%90%86#ACPI_%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88) にあります。
+LidSwitch のイベントに対するデフォルトの動作が、archlinux.jp ドキュメント [ACPI イベント](https://wiki.archlinux.jp/index.php/%E9%9B%BB%E6%BA%90%E7%AE%A1%E7%90%86#ACPI_%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88) にまとめられていました。
 
 なお、プロパティの FLAGS にある `const` は、その値がサービス起動時に決定され、動作中には変更されない定数です。
 
 ## 蓋の開閉状態のリアルタイム確認
-以下のコマンドを実行すると、ノートPCの蓋を開閉に応じた状態変化をリアルタイムで確認できます。
+以下のコマンドを実行すると、ノートPCの蓋の開閉に応じた状態変化をリアルタイムで確認できます。
 ```shell
 $ watch -n 1 "busctl get-property org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager LidClosed"
 ```
