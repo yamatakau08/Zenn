@@ -2,7 +2,7 @@
 title: "NixOS Linux サスペンド状態からの USB/Bluetooth キーボード/マウス操作での復帰設定"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
 topics: [ "NixOS", "Linux", "udev", "Bluetooth", "USB" ]
-published: false
+published: true
 ---
 
 ## はじめに
