@@ -1,8 +1,8 @@
 ---
 title: "NotebookLMの代替に？Open Notebook + Ollama でローカルLLM環境を構築する"
 type: "tech" # tech: 技術記事 / idea: アイデア記事
-topics: [ "AI", "opennotebook", "Ollama" ]
-published: false
+topics: [ "AI", "Docker", "llm", "NotebookLM", "opennotebook", "Ollama" ]
+published: true
 ---
 
 ## はじめに
@@ -166,7 +166,7 @@ index 47c59ff..727eb48 100644
        # REQUIRED: Change this to your own secret string
        # This encrypts your API keys in the database
 -      - OPEN_NOTEBOOK_ENCRYPTION_KEY=change-me-to-a-secret-string
-+      - OPEN_NOTEBOOK_ENCRYPTION_KEY=xxxx309f71ff2b1bfec4b439164c1c0bba2ce749dc57b6ae6da4d2821b24dba2d
++      - OPEN_NOTEBOOK_ENCRYPTION_KEY=xxxx.............................................................
 
        # Database connection (default values - no need to change)
        - SURREAL_URL=ws://surrealdb:8000/rpc
@@ -183,7 +183,7 @@ index 47c59ff..727eb48 100644
 ## Open Notebook Docker サービス起動
 
 :::message
-Mac の場合 `colima start` の実行を忘れないようにして下さい！
+Mac の場合 `colima start` の実行を忘れないようにしてください！
 :::
 
 ```shell
@@ -374,7 +374,7 @@ gemma3:latest（約3.3GB）のような比較的大きなモデルを使用す�
 
 ## うまく動作しない場合
 
-設定後に期待通りに動作しない、あるいはチャットの応答が極端に遅い場合は、以下のコマンドでコンテナのログを確認して対処してださい。
+設定後に期待通りに動作しない、あるいはチャットの応答が極端に遅い場合は、以下のコマンドでコンテナのログを確認して対処してください。
 
 ```shell
 ~/open-notebook (master)$ docker compose logs open_notebook
